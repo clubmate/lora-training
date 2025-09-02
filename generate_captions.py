@@ -89,11 +89,24 @@ def generate_caption(model, processor, image_path: Path, device: str, caption_co
         # Extract the caption text
         caption = parsed_answer.get(prompt, "")
         if isinstance(caption, str):
-            return caption.strip()
+            processed_caption = caption.strip()
         elif isinstance(caption, list) and len(caption) > 0:
-            return caption[0].strip()
+            processed_caption = caption[0].strip()
         else:
             return "Unable to generate caption"
+        
+        # Remove unwanted phrases from the beginning
+        remove_phrases = caption_config.get("remove_phrases", [])
+        for phrase in remove_phrases:
+            if processed_caption.lower().startswith(phrase.lower()):
+                # Remove the phrase and clean up the result
+                processed_caption = processed_caption[len(phrase):].strip()
+                # Capitalize the first letter if needed
+                if processed_caption and processed_caption[0].islower():
+                    processed_caption = processed_caption[0].upper() + processed_caption[1:]
+                break
+        
+        return processed_caption
             
     except Exception as e:
         logging.error(f"Error in generate_caption: {e}")

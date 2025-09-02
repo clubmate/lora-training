@@ -25,18 +25,22 @@ overwrite_existing: false
 # Caption generation settings
 caption:
   # Florence-2 prompt for caption generation
-  # "<MIXED_CAPTION>" Generates a caption that combines a detailed, structured description of the image with relevant tags, which is the recommended style for FLUX models. 
-  # "<MIXED_CAPTION_PLUS>" A more advanced version of <MIXED_CAPTION> that includes image composition analysis in addition to the detailed description and tags. 
   # "<DETAILED_CAPTION>" Produces a comprehensive, one-line or structured caption describing the image and the positions of subjects within it. 
   # "<MORE_DETAILED_CAPTION>" Generates a very elaborate and thorough description of the image. 
   # "<ANALYZE>" Focuses on analyzing the image's composition and structure. 
   # "<GENERATE_TAGS>" Creates tags for the image, similar to those found in the Danbooru dataset, which is useful for specific applications. 
   # "<OD>" Object detection (lists objects)
   # "<DENSE_REGION_CAPTION>" Dense region captions
-  prompt: "<MORE_DETAILED_CAPTION>"
+  prompt: "<DETAILED_CAPTION>"
   
   # Model settings
   model_id: "microsoft/Florence-2-large"  # or "microsoft/Florence-2-base" for faster processing
   max_new_tokens: 1024
   do_sample: false
   use_cache: false
+  
+  # Text processing settings
+  remove_phrases:
+    - "The image shows"
+    - "The image is"
+    # Add more phrases you want to remove from the beginning of captions

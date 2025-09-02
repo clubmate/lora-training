@@ -104,6 +104,16 @@ caption:
   max_new_tokens: 1024
   do_sample: false
   use_cache: false
+  
+  # Text processing settings
+  remove_phrases:
+    - "The image shows"
+    - "The image is"
+    - "This image shows"
+    - "This image is"
+    - "The picture shows"
+    - "The picture is"
+    # Add more phrases you want to remove from the beginning of captions
 ```
 
 ## Usage
