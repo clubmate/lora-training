@@ -1,0 +1,23 @@
+# Target sizes for images (square)
+target_sizes:
+  - 512
+  - 1024
+
+# Supported image formats
+supported_formats:
+  - ".jpg"
+  - ".jpeg"
+  - ".png"
+  - ".bmp"
+  - ".tiff"
+  - ".webp"
+
+# Quality settings
+quality:
+  png_compress_level: 1  # 1 = best quality, 9 = smallest size
+
+# Resampling algorithm (LANCZOS for best quality)
+resampling_method: "LANCZOS"
+
+# Whether to overwrite existing files
+overwrite_existing: false
