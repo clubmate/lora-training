@@ -47,15 +47,21 @@ python prepare_images.py
 After preparing the images, run `generate_captions.py` to create text captions for each image.
 
 ```bash
-python generate_captions.py
+# Generate captions for a specific directory
+python generate_captions.py datasets/aigarasch/512x512
+
+# Generate captions for 1024x1024 images
+python generate_captions.py datasets/aigarasch/1024x1024
+
+# Use custom config and debug logging
+python generate_captions.py datasets/mymodel/512x512 --config custom_config.yaml --log-level DEBUG
 ```
 
-This will process the images in the sized directories (e.g., `datasets/aigarasch/512x512`) and save a `.txt` file for each image with the generated caption.
+This will process the images in the specified directory and save a `.txt` file for each image with the generated caption.
 
 ## Configuration
 
 Edit the `config.yaml` file according to your needs:
-
 
 ```yaml
 # Target sizes (square)
@@ -81,6 +87,23 @@ resampling_method: "LANCZOS"
 
 # Overwrite existing files
 overwrite_existing: false
+
+# Caption generation settings
+caption:
+  # Florence-2 prompt for caption generation
+  # Available prompts:
+  # - "<CAPTION>" - Basic caption
+  # - "<DETAILED_CAPTION>" - More detailed description  
+  # - "<MORE_DETAILED_CAPTION>" - Very detailed description
+  # - "<OD>" - Object detection (lists objects)
+  # - "<DENSE_REGION_CAPTION>" - Dense region captions
+  prompt: "<MORE_DETAILED_CAPTION>"
+  
+  # Model settings
+  model_id: "microsoft/Florence-2-large"  # or "microsoft/Florence-2-base" for faster processing
+  max_new_tokens: 1024
+  do_sample: false
+  use_cache: false
 ```
 
 ## Usage
