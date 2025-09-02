@@ -1,29 +1,61 @@
-# LORA Training Image Preparation
+jetzt möchte ich ein zweites skript programmieren welches nach dem prepare_images.py aufgerufen wird und die resized bilder mittels dem florence2-modell (GPU beschleunigt) einer captions datei erstellt die genauso heisst wie das bild, bloss mit der endung .txt. bitte achte darauf das du alle befehler im terminal in der venv umgebung machst. es sollen ausserdem keine neuen yaml oder readme-dateien erstellt werden, sondern die vorhandenen erweitert. wenn du florence2 installierst, achte darauf das du nur die GPU-beschleunigten pakete installierst weil sonst florence2 nicht funktioniert.
 
-This script prepares image files for training LoRA models by scaling them to different target sizes and organizing them into corresponding directories.
+
+# LORA Training Image Preparation & Captioning
+
+This project provides scripts to prepare image files for training LoRA models. It includes scaling images and generating detailed captions.
 
 ## Features
 
-- Scales images to multiple defined sizes (e.g., 512x512, 1024x1024)
-- Maintains aspect ratio and adds white padding for square output
-- Supports various image formats (JPG, PNG, BMP, TIFF, WEBP)
-- Configurable quality settings
-- Automatic directory creation
-- Progress display and detailed logging
-- Skips already existing files (optional)
+- **Image Scaling**: Scales images to multiple defined sizes (e.g., 512x512, 1024x1024).
+- **Caption Generation**: Generates detailed captions for images using the `Florence-2-large-no-flash-attn` model (modified version without flash_attn dependency).
+- Maintains aspect ratio and adds white padding for square output.
+- Supports various image formats (JPG, PNG, BMP, TIFF, WEBP).
+- Configurable quality settings.
+- Automatic directory creation.
+- Progress display and detailed logging.
+- Skips already existing files (optional).
 
 ## Installation
 
-1. Make sure Python 3.7+ is installed
-2. Install dependencies:
+1.  Make sure Python 3.7+ is installed.
+2.  It is recommended to use a virtual environment.
+
+    ```bash
+    python -m venv venv
+    venv\Scripts\activate
+    ```
+3.  Install dependencies:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+    For GPU support, ensure you have a compatible PyTorch version installed with CUDA.
+
+## Usage
+
+### 1. Prepare Images
+
+Run the `prepare_images.py` script to scale your images.
 
 ```bash
-pip install -r requirements.txt
+python prepare_images.py
 ```
+
+### 2. Generate Captions
+
+After preparing the images, run `generate_captions.py` to create text captions for each image.
+
+```bash
+python generate_captions.py
+```
+
+This will process the images in the sized directories (e.g., `datasets/aigarasch/512x512`) and save a `.txt` file for each image with the generated caption.
 
 ## Configuration
 
 Edit the `config.yaml` file according to your needs:
+
 
 ```yaml
 # Target sizes (square)
@@ -106,6 +138,23 @@ datasets/aigarasch/
     └── ...
 ```
 
+After running `generate_captions.py`, you will also have `.txt` files:
+```
+datasets/aigarasch/
+├── 512x512/
+│   ├── image001.png
+│   ├── image001.txt
+│   ├── image002.png
+│   ├── image002.txt
+│   └── ...
+└── 1024x1024/
+    ├── image001.png
+    ├── image001.txt
+    ├── image002.png
+    ├── image002.txt
+    └── ...
+```
+
 ## Image Processing
 
 - **Aspect ratio**: Maintained, smaller side is scaled to target size
@@ -119,11 +168,14 @@ For your existing images in `datasets/aigarasch/_raw/`:
 
 ```bash
 python prepare_images.py
+python generate_captions.py
 ```
 
-This will process all PNG files and create scaled versions in:
+This will first process all PNG files and create scaled versions in:
 - `datasets/aigarasch/512x512/`
 - `datasets/aigarasch/1024x1024/`
+
+Then, it will generate captions for each of the scaled images.
 
 ## Supported Resampling Methods
 
