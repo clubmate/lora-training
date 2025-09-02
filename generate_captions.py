@@ -95,16 +95,29 @@ def generate_caption(model, processor, image_path: Path, device: str, caption_co
         else:
             return "Unable to generate caption"
         
-        # Remove unwanted phrases from the beginning
+        # Remove unwanted phrases from the beginning (iteratively)
         remove_phrases = caption_config.get("remove_phrases", [])
-        for phrase in remove_phrases:
-            if processed_caption.lower().startswith(phrase.lower()):
-                # Remove the phrase and clean up the result
-                processed_caption = processed_caption[len(phrase):].strip()
-                # Capitalize the first letter if needed
-                if processed_caption and processed_caption[0].islower():
-                    processed_caption = processed_caption[0].upper() + processed_caption[1:]
-                break
+        original_caption = processed_caption
+        
+        # Keep trying to remove phrases until no more matches are found
+        phrases_removed = []
+        changed = True
+        while changed:
+            changed = False
+            for phrase in remove_phrases:
+                if processed_caption.lower().startswith(phrase.lower()):
+                    # Remove the phrase and clean up the result
+                    processed_caption = processed_caption[len(phrase):].strip()
+                    phrases_removed.append(phrase)
+                    changed = True
+                    break  # Start over from the beginning to handle nested phrases
+        
+        # Capitalize the first letter if needed
+        if processed_caption and processed_caption[0].islower():
+            processed_caption = processed_caption[0].upper() + processed_caption[1:]
+        
+        if phrases_removed:
+            logging.debug(f"Removed phrases: {phrases_removed}")
         
         return processed_caption
             
