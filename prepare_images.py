@@ -20,8 +20,7 @@ def setup_logging(log_level: str = "INFO") -> None:
     """Sets up logging configuration."""
     logging.basicConfig(
         level=getattr(logging, log_level.upper()),
-        format='%(asctime)s - %(levelname)s - %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
+        format='%(message)s'
     )
 
 
@@ -109,8 +108,16 @@ def resize_image(image_path: Path, target_size: int, resampling_method) -> Image
             elif img.mode != 'RGB':
                 img = img.convert('RGB')
             
-            # Calculate new size while maintaining aspect ratio
-            img.thumbnail((target_size, target_size), resampling_method)
+            # Calculate scaling factor to fit the image within target_size
+            original_width, original_height = img.size
+            scale_factor = min(target_size / original_width, target_size / original_height)
+            
+            # Calculate new dimensions
+            new_width = int(original_width * scale_factor)
+            new_height = int(original_height * scale_factor)
+            
+            # Resize the image (both up and down scaling)
+            img = img.resize((new_width, new_height), resampling_method)
             
             # Create square image with white background
             square_img = Image.new('RGB', (target_size, target_size), (255, 255, 255))
