@@ -42,5 +42,5 @@ caption:
   # Text processing settings
   remove_phrases:
     - "The image shows"
-    - "The image is"
+    - "A painting of"
     # Add more phrases you want to remove from the beginning of captions
