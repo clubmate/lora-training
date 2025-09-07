@@ -31,7 +31,7 @@ caption:
   # "<GENERATE_TAGS>" Creates tags for the image, similar to those found in the Danbooru dataset, which is useful for specific applications. 
   # "<OD>" Object detection (lists objects)
   # "<DENSE_REGION_CAPTION>" Dense region captions
-  prompt: "<DETAILED_CAPTION>"
+  prompt: "<MORE_DETAILED_CAPTION>"
   
   # Model settings
   model_id: "microsoft/Florence-2-large"  # or "microsoft/Florence-2-base" for faster processing
