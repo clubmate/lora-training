@@ -1,6 +1,3 @@
-jetzt möchte ich ein zweites skript programmieren welches nach dem prepare_images.py aufgerufen wird und die resized bilder mittels dem florence2-modell (GPU beschleunigt) einer captions datei erstellt die genauso heisst wie das bild, bloss mit der endung .txt. bitte achte darauf das du alle befehler im terminal in der venv umgebung machst. es sollen ausserdem keine neuen yaml oder readme-dateien erstellt werden, sondern die vorhandenen erweitert. wenn du florence2 installierst, achte darauf das du nur die GPU-beschleunigten pakete installierst weil sonst florence2 nicht funktioniert.
-
-
 # LORA Training Image Preparation & Captioning
 
 This project provides scripts to prepare image files for training LoRA models. It includes scaling images and generating detailed captions.
