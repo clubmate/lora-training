@@ -1,9 +1,112 @@
-jetzt möchte ich ein zweites skript programmieren welches nach dem prepare_images.py aufgerufen wird und die resized bilder mittels dem florence2-modell (GPU beschleunigt) einer captions datei erstellt die genauso heisst wie das bild, bloss mit der endung .txt. bitte achte darauf das du alle befehler im terminal in der venv umgebung machst. es sollen ausserdem keine neuen yaml oder readme-dateien erstellt werden, sondern die vorhandenen erweitert. wenn du florence2 installierst, achte darauf das du nur die GPU-beschleunigten pakete installierst weil sonst florence2 nicht funktioniert.
+# Image Comparator with ELO Rating
 
+A Python GUI application for comparing images and ranking them using an ELO rating system.
+
+## Features
+
+- **Side-by-side image comparison** with clickable interface
+- **ELO rating system** for fair and accurate image rankings
+- **Smart pair selection** that avoids repeating the same comparisons
+- **Comprehensive rankings view** with thumbnails and statistics
+- **Keyboard shortcuts** for efficient navigation
+- **Export/Import functionality** to save and restore rankings
+- **Support for multiple image formats** (JPG, PNG, BMP, GIF, TIFF, WebP)
+
+## Requirements
+
+- Python 3.7+
+- Pillow (PIL)
+
+## Installation
+
+1. Install the required dependencies:
+```bash
+pip install -r requirements_image_comparator.txt
+```
+
+2. Run the application:
+```bash
+python image_comparator.py
+```
+
+## Usage
+
+### Basic Workflow
+
+1. **Select Directory**: Click "Browse" or press Ctrl+O to select a folder containing images
+2. **Compare Images**: Two random images will appear side by side
+3. **Choose Winner**: Click on the better image or use arrow keys (← for left, → for right)
+4. **View Rankings**: Click "Rankings" to see all images sorted by their ELO scores
+
+### Keyboard Shortcuts
+
+- `←` (Left Arrow) - Left image wins
+- `→` (Right Arrow) - Right image wins
+- `Space` - Skip this pair
+- `Ctrl+O` - Open directory
+- `F1` - Show help
+- `Esc` - Exit application
+
+### Features
+
+**ELO Rating System**: 
+- All images start with a rating of 1500
+- Winning against higher-rated images gives more points
+- Losing against lower-rated images costs more points
+- The system converges to accurate rankings over time
+
+**Smart Pair Selection**:
+- Automatically avoids showing the same pair repeatedly
+- Prioritizes comparisons between images that haven't been compared
+- Ensures fair distribution of comparisons
+
+**Rankings View**:
+- Shows all images sorted by ELO rating
+- Displays thumbnails, filenames, and comparison counts
+- Color-coded ratings (green = above average, red = below average)
+- Resizable panels with mouse drag functionality
+- Full-size image preview on click
+
+**Data Persistence**:
+- Export rankings to JSON format for backup
+- Import previous rankings to continue sessions
+- Automatically tracks comparison history
+
+## Tips for Best Results
+
+1. **Compare consistently**: Try to use similar criteria for all comparisons
+2. **Make enough comparisons**: More comparisons lead to more accurate rankings
+3. **Mixed comparisons**: The algorithm works best when images compete across different skill levels
+4. **Save progress**: Export your rankings regularly to avoid losing progress
+
+## Technical Details
+
+**ELO Algorithm**: Uses a K-factor of 32, which provides good responsiveness to new comparisons while maintaining stability.
+
+**Image Loading**: Automatically handles different image formats and aspect ratios. Images are displayed at original size in comparison view for fastest loading, with thumbnails used only in rankings list.
+
+**Performance**: Designed to handle hundreds of images efficiently. For very large datasets (1000+ images), the smart pair selection limits sampling to maintain responsiveness.
+
+## Troubleshooting
+
+**Images not loading**: Ensure your directory contains supported image formats (JPG, PNG, BMP, GIF, TIFF, WebP).
+
+**Keyboard shortcuts not working**: Click on the main window to ensure it has focus.
+
+**Performance issues**: For very large image collections, consider organizing into smaller subdirectories.
+
+## Example Use Cases
+
+- **Photography**: Compare and rank your best photos
+- **Art Selection**: Choose the best artwork or designs
+- **Dataset Curation**: Rank images in machine learning datasets
+- **Content Selection**: Choose the best images for websites or presentations
+
+---
 
 # LORA Training Image Preparation & Captioning
 
-This project provides scripts to prepare image files for training LoRA models. It includes scaling images and generating detailed captions.
+This project also provides scripts to prepare image files for training LoRA models. It includes scaling images and generating detailed captions.
 
 ## Features
 
